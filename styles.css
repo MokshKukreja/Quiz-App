@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    overflow-x: hidden;
 }
 
 .container {
@@ -71,10 +72,12 @@
     background-color: #fbfaf4;
     display: flex;
     justify-content: center;
+    align-items: center;
     padding-top: 20%;
+    padding-left: 30%;
 }
 .result-container{
-    background-color: #343f56; /* Darker color */
+    background-color: #343f56; 
     color: white;
     height: 30%;
     width: 50%;
@@ -83,3 +86,6 @@
     align-items: center;
     border-radius: 23px;
 }
+
+
+

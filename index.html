@@ -47,6 +47,8 @@
         const quesNo = document.querySelector(".quesNo")
         const buttons = document.querySelectorAll(".quesBtns button");
         const container = document.querySelector(".container");
+        const rscontainer = document.querySelector(".rs-container");
+
 
         
 
@@ -105,8 +107,7 @@
     // Add more questions here...
 ];
 
-resultPara.style.display = "none"
-// container.style.display="block"
+rscontainer.style.display = "none"
 
         button1.addEventListener("click", () => checkAnswer(0));
         button2.addEventListener("click", () => checkAnswer(1));
@@ -174,7 +175,7 @@ resultPara.style.display = "none"
                 nextBtn.innerHTML = currentIndex === questions.length - 1 ? "Submit" : "Next";
             }
             else {
-                resultPara.style.display = "block";
+                rscontainer.style.display = "block";
                 container.style.display="none"
             }
            checker=0;  
