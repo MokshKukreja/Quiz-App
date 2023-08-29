@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuizMaster</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- <h1>QuizMaster</h1> -->
+        <div class="question-container">
+           <div class="quesDetails">
+            <p class="quesNo"></p>
+            <p id="ques"></p>
+        </div>
+            <div class="navigationBtn">
+             <!-- <button class="prevBtn">Prev</button> -->
+             <button class="nextBtn">Next</button>
+            </div>
+        </div>
+           <div class="quesBtns">
+            <p>Choose a correct option</p>
+            <button class="button1"></button>
+            <button class="button2"></button>
+            <button class="button3"></button>
+            <button class="button4"></button>
+           </div>
+        </div>
+       <div class="rs-container">
+        <div class="result-container">
+            <h1 class="resultPara">Your score is 0</h1>
+        </div>
+       </div>
+       
+    <script>
+        const button1 = document.querySelector(".button1")
+        const button2 = document.querySelector(".button2")
+        const button3 = document.querySelector(".button3")
+        const button4 = document.querySelector(".button4")
+        const resultPara = document.querySelector(".resultPara")
+        const ques = document.getElementById("ques")
+        const nextBtn = document.querySelector(".nextBtn")
+        const prevBtn = document.querySelector(".prevBtn")
+        const quesNo = document.querySelector(".quesNo")
+        const buttons = document.querySelectorAll(".quesBtns button");
+        const container = document.querySelector(".container");
+
+        
+
+
+        const questions = [
+    {
+        question: "What is the capital of France?",
+        answers: [
+            { option: "Paris" },
+            { option: "Berlin" },
+            { option: "Madrid" },
+            { option: "Rome" },
+        ],
+        correctAnswerIndex: 0,
+    },
+    {
+        question: "Which planet is known as the 'Red Planet'?",
+        answers: [
+            { option: "Mars" },
+            { option: "Venus" },
+            { option: "Jupiter" },
+            { option: "Mercury" },
+        ],
+        correctAnswerIndex: 0,
+    },
+    {
+        question: "What is the chemical symbol for gold?",
+        answers: [
+            { option: "Au" },
+            { option: "Ag" },
+            { option: "Cu" },
+            { option: "Fe" },
+        ],
+        correctAnswerIndex: 0,
+    },
+    {
+        question: "Who wrote the play 'Romeo and Juliet'?",
+        answers: [
+            { option: "William Shakespeare" },
+            { option: "Jane Austen" },
+            { option: "Mark Twain" },
+            { option: "Charles Dickens" },
+        ],
+        correctAnswerIndex: 0,
+    },
+    {
+        question: "Which famous scientist developed the theory of relativity?",
+        answers: [
+            { option: "Albert Einstein" },
+            { option: "Isaac Newton" },
+            { option: "Galileo Galilei" },
+            { option: "Nikola Tesla" },
+        ],
+        correctAnswerIndex: 0,
+    },
+    // Add more questions here...
+];
+
+resultPara.style.display = "none"
+// container.style.display="block"
+
+        button1.addEventListener("click", () => checkAnswer(0));
+        button2.addEventListener("click", () => checkAnswer(1));
+        button3.addEventListener("click", () => checkAnswer(2));
+        button4.addEventListener("click", () => checkAnswer(3));
+
+
+        let currentIndex = 0;
+        let checker = 0;
+        let count = 0;
+        let countSum=0
+        function checkAnswer(selectedIndex) {
+            const currentQuestion = questions[currentIndex];
+            if(countSum<=questions.length-1){
+                if(checker===0){
+                    if (selectedIndex === currentQuestion.correctAnswerIndex) {
+                        count=1;
+                        if(selectedIndex!=currentQuestion.correctAnswerIndex){
+                            checker=0
+                        }else{
+                            checker=1
+                        }
+                    }
+                    else{
+                        count = 0;
+                    }
+            
+                countSum = countSum + count;
+                updateCount()
+            }
+            
+            if(checker===1 && selectedIndex!=currentQuestion.correctAnswerIndex){
+                checker=0;
+                countSum=countSum-1;
+            }
+            
+            console.log(countSum)
+               }
+        }
+
+        function updateCount() {
+            resultPara.textContent = `Your score is ${countSum}`;
+        }
+
+
+        ques.innerHTML = questions[currentIndex].question
+        button1.innerHTML = questions[currentIndex].answers[0].option
+        button2.innerHTML = questions[currentIndex].answers[1].option
+        button3.innerHTML = questions[currentIndex].answers[2].option
+        button4.innerHTML = questions[currentIndex].answers[3].option
+        quesNo.innerHTML = `Question ${currentIndex+1}.`;
+
+
+
+
+        nextBtn.addEventListener('click', function () {
+            if (currentIndex < questions.length-1) {
+                ques.innerHTML = questions[currentIndex + 1].question
+                button1.innerHTML = questions[currentIndex + 1].answers[0].option
+                button2.innerHTML = questions[currentIndex + 1].answers[1].option
+                button3.innerHTML = questions[currentIndex + 1].answers[2].option
+                button4.innerHTML = questions[currentIndex + 1].answers[3].option
+                quesNo.textContent = `Question ${currentIndex+2}.`;
+                currentIndex++;
+                nextBtn.innerHTML = currentIndex === questions.length - 1 ? "Submit" : "Next";
+            }
+            else {
+                resultPara.style.display = "block";
+                container.style.display="none"
+            }
+           checker=0;  
+        });
+
+
+        prevBtn.addEventListener('click',function(){
+            if(currentIndex>0){
+                ques.innerHTML = questions[currentIndex - 1].question
+                button1.innerHTML = questions[currentIndex - 1].answers[0].option
+                button2.innerHTML = questions[currentIndex - 1].answers[1].option
+                button3.innerHTML = questions[currentIndex - 1].answers[2].option
+                button4.innerHTML = questions[currentIndex - 1].answers[3].option
+                quesNo.textContent = `Question ${currentIndex}.`;
+                currentIndex--;
+            }
+        })
+
+document.addEventListener("DOMContentLoaded", function() {
+    const buttons = document.querySelectorAll(".quesBtns button");
+
+    buttons.forEach(button => {
+        button.addEventListener("click", function() {
+            buttons.forEach(b => b.classList.remove("active")); 
+            this.classList.add("active"); 
+        });
+    });
+});
+
+
+document.addEventListener("DOMContentLoaded",function(){
+    nextBtn.addEventListener("click",function(){
+        buttons.forEach(b=>b.classList.remove("active"));
+    })
+})
+
+
+
+
+
+    </script>
+</body>
+
+</html>
